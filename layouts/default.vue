@@ -8,20 +8,6 @@
       app
     >
       <v-list>
-        <!-- <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item> -->
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -39,7 +25,7 @@
 
         <v-list-group
           v-for="(item, index) in menus"
-          :key="index"
+          :key="'menu_' + index"
           :value="false"
           :prepend-icon="item.icon"
           no-action>
@@ -50,10 +36,12 @@
 
           <v-list-item
             v-for="(subItem, subIndex) in item.children"
-            :key="subIndex"
+            :key="'submenu_' + subIndex"
             :to="item.to + subItem.to"
             router
-            exact>
+            exact
+            @click="setMenuName(subItem.title)"
+          >
             <v-list-item-content>
               <v-list-item-title v-text="subItem.title" />
             </v-list-item-content>
@@ -88,11 +76,11 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-switch
+      <!-- <v-switch
         v-model="darkYn"
         :label="`darkMode : ${darkYn ? 'On' : 'Off'}`"
         :change='changeDarkMode'>
-      </v-switch>
+      </v-switch> -->
       <v-btn
         icon
         @click.stop="rightDrawer = !rightDrawer"
@@ -101,7 +89,19 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container :fluid="true">
+        <v-row>
+          <v-col cols="12">
+            <v-card>
+              <v-card-title>
+                {{ menuName }}
+              </v-card-title>
+              <v-card-subtitle>
+                subtitle
+              </v-card-subtitle>
+            </v-card>
+          </v-col>
+        </v-row>
         <nuxt />
       </v-container>
     </v-main>
@@ -138,69 +138,77 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      darkYn: false,
+      // darkYn: false,
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Main',
           to: '/',
           children: [
 
           ]
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
-          children: []
         }
       ],
       menus: [
         {
           icon: 'mdi-file-document-multiple-outline',
-          title: '계약',
-          to: '/contracts',
+          title: '게시판',
+          to: '/example-board',
           children: [
             {
-              title: '계약현황',
-              to: '/list'
+              title: '게시판인덱스',
+              to: '/index'
             }
           ]
         },
         {
           icon: 'mdi-content-save-edit-outline',
-          title: '시제품승인',
-          to: '/inspire',
+          title: 'Color',
+          to: '/example-color',
           children: []
         },
         {
           icon: 'mdi-content-save-move-outline',
-          title: '완제품승인',
-          to: '/inspire',
+          title: 'Data',
+          to: '/example-data',
           children: []
         },
         {
           icon: 'mdi-certificate',
-          title: '증지',
-          to: '/inspire',
+          title: 'Layout',
+          to: '/example-layout',
           children: []
         },
         {
-          icon: 'mdi-certificate-outlinee',
-          title: '기타증지',
-          to: '/inspire',
-          children: []
+          icon: 'mdi-certificate-outline',
+          title: 'List',
+          to: '/example-list',
+          children: [
+            {
+              icon: 'mdi-certificate-outline',
+              title: 'List-Main',
+              to: '/index'
+            }
+          ]
         },
         {
           icon: 'mdi-calculator',
-          title: '정산',
-          to: '/inspire',
+          title: 'EMain',
+          to: '/example-main',
           children: []
         },
         {
           icon: 'mdi-account-settings-outline',
-          title: '관리자 메뉴',
-          to: '/inspire',
+          title: 'Modal',
+          to: '/example-modal',
+          children: [
+
+          ]
+        },
+        {
+          icon: 'mdi-account-settings-outline',
+          title: 'Setting',
+          to: '/example-setting',
           children: [
 
           ]
@@ -215,14 +223,20 @@ export default {
   computed: {
     darkMode () {
       return this.$vuetify.theme.dark
+    },
+    menuName () {
+      return this.$vuetify.menuName
     }
   },
   created () {
-    this.darkYn = this.darkMode
+    // this.darkYn = this.darkMode
   },
   methods: {
     changeDarkMode () {
       this.$vuetify.theme.dark = this.darkYn
+    },
+    setMenuName (titleName) {
+      this.$vuetify.menuName = titleName
     }
   }
 }

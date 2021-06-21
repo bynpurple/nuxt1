@@ -62,7 +62,8 @@ export default {
           success: colors.green.accent3
         }
       }
-    }
+    },
+    menuName: ''
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
