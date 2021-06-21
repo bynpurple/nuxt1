@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="12">
+    <v-col cols="6">
       <v-card>
         <v-card-title>검색</v-card-title>
       </v-card>

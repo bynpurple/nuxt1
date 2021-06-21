@@ -3,7 +3,6 @@
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
-      :clipped="clipped"
       fixed
       app
     >
@@ -14,6 +13,7 @@
           :to="item.to"
           router
           exact
+          @click="setMenuName(item.title)"
         >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -48,80 +48,20 @@
           </v-list-item>
         </v-list-group>
       </v-list>
-
     </v-navigation-drawer>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <!-- <v-switch
-        v-model="darkYn"
-        :label="`darkMode : ${darkYn ? 'On' : 'Off'}`"
-        :change='changeDarkMode'>
-      </v-switch> -->
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-    </v-app-bar>
     <v-main>
       <v-container :fluid="true">
-        <v-row>
-          <v-col cols="12">
-            <v-card>
-              <v-card-title>
-                {{ menuName }}
-              </v-card-title>
-              <v-card-subtitle>
-                subtitle
-              </v-card-subtitle>
-            </v-card>
-          </v-col>
-        </v-row>
+        <v-app-bar absolute>
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+          <v-app-bar-title>
+            {{ $store.getters.getMenuName }}
+          </v-app-bar-title>
+        </v-app-bar>
+      </v-container>
+      <v-container :fluid="true" class="main-container">
         <nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-footer
       :absolute="!fixed"
       app
@@ -133,16 +73,17 @@
 
 <script>
 export default {
+  name: 'MainLayout',
   data () {
     return {
-      clipped: false,
+      clipped: true,
       drawer: false,
       fixed: false,
       // darkYn: false,
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Main',
+          title: 'System Name',
           to: '/',
           children: [
 
@@ -217,27 +158,35 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'LOS_TEST'
+      title: 'LOS_TEST',
+      menuName: ''
     }
   },
   computed: {
-    darkMode () {
+    darkYn () {
       return this.$vuetify.theme.dark
-    },
-    menuName () {
-      return this.$vuetify.menuName
     }
+  },
+  mounted () {
+    this.$vuetify.theme.dark = this.$store.state.darkYn
+    this.menuName = this.$store.state.menuName
+    this.darkMode = this.$store.state.darkYn
   },
   created () {
     // this.darkYn = this.darkMode
   },
   methods: {
     changeDarkMode () {
-      this.$vuetify.theme.dark = this.darkYn
+      this.$store.commit('setDarkYn')
+      this.$vuetify.theme.dark = this.$store.state.darkYn
     },
     setMenuName (titleName) {
-      this.$vuetify.menuName = titleName
+      this.$store.commit('setMenuName', titleName)
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../assets/scss/nav.scss';
+</style>
