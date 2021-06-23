@@ -54,7 +54,7 @@
         <v-app-bar absolute>
           <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
           <v-app-bar-title>
-            {{ $store.getters.getMenuName }}
+            {{ menuName }}
           </v-app-bar-title>
         </v-app-bar>
       </v-container>
@@ -180,8 +180,9 @@ export default {
       this.$store.commit('setDarkYn')
       this.$vuetify.theme.dark = this.$store.state.darkYn
     },
-    setMenuName (titleName) {
-      this.$store.commit('setMenuName', titleName)
+    setMenuName (menuName) {
+      this.$store.commit('setMenuName', menuName)
+      menuName = this.$store.getters.menuName
     }
   }
 }

@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'ExampleBoardIndex'
+  name: 'ExampleBoardAdd'
 }
 </script>
 

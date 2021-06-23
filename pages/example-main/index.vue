@@ -1,10 +1,10 @@
 <template>
-  <v-row>hi</v-row>
+  <v-card>hi</v-card>
 </template>
 
 <script>
 export default {
-  name: 'ExampleBoardIndex'
+  name: 'ExampleMainIndex'
 }
 </script>
 
