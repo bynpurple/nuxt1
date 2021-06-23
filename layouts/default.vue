@@ -54,7 +54,7 @@
         <v-app-bar absolute>
           <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
           <v-app-bar-title>
-            {{ menuName }}
+            {{ 'Amoled_Project' }}
           </v-app-bar-title>
         </v-app-bar>
       </v-container>
@@ -83,7 +83,7 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'System Name',
+          title: 'Amoled_Project',
           to: '/',
           children: [
 
@@ -98,7 +98,7 @@ export default {
           children: [
             {
               title: '게시판인덱스',
-              to: '/index'
+              to: ''
             }
           ]
         },
@@ -128,7 +128,7 @@ export default {
             {
               icon: 'mdi-certificate-outline',
               title: 'List-Main',
-              to: '/index'
+              to: ''
             }
           ]
         },
@@ -169,7 +169,7 @@ export default {
   },
   mounted () {
     this.$vuetify.theme.dark = this.$store.state.darkYn
-    this.menuName = this.$store.state.menuName
+    this.menuName = this.$store.getters.menuName
     this.darkMode = this.$store.state.darkYn
   },
   created () {
