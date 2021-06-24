@@ -1,5 +1,29 @@
 <template>
-  <v-card>hi</v-card>
+  <v-card>
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">
+              Name
+            </th>
+            <th class="text-left">
+              Writer
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="item in jobs.content"
+            :key="item.name"
+          >
+            <td>{{ item.jobName }}</td>
+            <td>{{ item.regEmpInfo.empName }}</td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+  </v-card>
 </template>
 
 <script>
@@ -12,12 +36,14 @@ export default {
         size: 15,
         sort: 'RegDate,asc',
         searchName: ''
-      }
+      },
+      jobs: []
     }
   },
   mounted () {},
   created () {
-    this.searchJobs({ type: 'init' })
+    // this.searchJobs()
+    this.getJobs()
   },
   methods: {
     searchJobs (options) {
@@ -31,13 +57,14 @@ export default {
       this.COMMON.searchPagination(option)
     },
     getJobs () {
-      const apiURL = `${this.ENV_NUXT}/job/list`
-      const apiSearch = location.search
+      const apiURL = `${this.ENV_NUXT}/job/page`
+      const apiSearch = '?page=0&size=15&sort=RegDate,asc&searchName='
       this.$http({
         method: 'get',
         url: apiURL + apiSearch
       }).then((result) => {
         console.info(result)
+        this.jobs = result.data.contents
       }).catch((error) => {
         console.warn(error)
       })
