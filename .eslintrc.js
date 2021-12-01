@@ -21,6 +21,7 @@ module.exports = {
     'vue/html-closing-bracket-newline': 'off',
     'vue/v-slot-style': 'off',
     'vue/html-self-closing': 'off',
-    'vue/html-closing-bracket-newline': 'off'
+    'vue/html-closing-bracket-newline': 'off',
+    "no-console": "off"
   }
 }

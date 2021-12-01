@@ -2,3 +2,28 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+
+@import '~vuetify/src/styles/styles.sass';
+
+// $primary: map-get($map: $light-green, $key: lighten-2);
+// $success: map-get($map: $light-blue, $key: lighten-1);
+// $warning: map-get($map: $amber, $key: base);
+// $error: map-get($map: $deep-orange, $key: accent-3);
+
+// $accent: map-get($map: $lime, $key: darken-3);
+// $secondary: map-get($map: $cyan, $key: lighten-2);
+// $info: map-get($map: $teal, $key: lighten-1);
+
+$background: #f8f8f9;
+$disabled: #c5c8ce;
+$border: #dcdee2;
+
+$title: #17233d;
+
+$primary: #8bc34a;
+$secondary: #009688;
+$accent: #4caf50;
+$error: #ff5722;
+$warning: #f44336;
+$info: #03a9f4;
+$success: #2196f3;
