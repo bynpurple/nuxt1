@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -24,7 +24,7 @@
         </v-list-item> -->
         <v-list-item
           v-for="(item, i) in items"
-          :key="i"
+          :key="'list' + i"
           :to="item.to"
           router
           exact
@@ -39,7 +39,7 @@
 
         <v-list-group
           v-for="(item, index) in menus"
-          :key="index"
+          :key="'menus-' + index"
           :value="false"
           :prepend-icon="item.icon"
           no-action>
@@ -50,7 +50,7 @@
 
           <v-list-item
             v-for="(subItem, subIndex) in item.children"
-            :key="subIndex"
+            :key="'submenus-' + subIndex"
             :to="item.to + subItem.to"
             router
             exact>
@@ -88,11 +88,11 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-switch
+      <!-- <v-switch
         v-model="darkYn"
         :label="`darkMode : ${darkYn ? 'On' : 'Off'}`"
         :change='changeDarkMode'>
-      </v-switch>
+      </v-switch> -->
       <v-btn
         icon
         @click.stop="rightDrawer = !rightDrawer"
@@ -142,7 +142,7 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'Home',
           to: '/',
           children: [
 
@@ -209,21 +209,14 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'LOS_TEST'
+      title: 'NUXT'
     }
   },
   computed: {
-    darkMode () {
-      return this.$vuetify.theme.dark
-    }
   },
   created () {
-    this.darkYn = this.darkMode
   },
   methods: {
-    changeDarkMode () {
-      this.$vuetify.theme.dark = this.darkYn
-    }
   }
 }
 </script>
